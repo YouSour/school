@@ -1,0 +1,120 @@
+<!--Generate-->
+<template name="school_registerFormReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            <span style="font-size: 15px">
+
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title" style="line-height: 200%">
+                        <img src="/school/kunthea.png" style="float:left; width: 110px; height: 110px">
+                        <img src="/school/hope-brain.png" style="float:right; width: 110px; height: 110px">
+
+                        <div class="title-1x-kh-muol" style="font-size: 24px">{{khName}}</div>
+                        <div class="title-1x" style="font-size: 22px">{{enName}}</div>
+                        <div class="title-1x-kh-muol" style="font-size: 20px">សីលធម៌ ចំណេះដឹង ឧត្តមភាព</div>
+                        <br>
+                        <div class="title-2x" style="font-size: 14px">{{khAddress}}, Tel: {{telephone}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                {{#with content}}
+                    <img src="{{_student.photoUrl}}" style="float:right; width: 90px; height: 90px">
+                    <div style="text-align: center;font-size: 18px; font-family: 'Khmer OS Muol'; font-weight: normal;"><u>ពាក្យសុំចុះឈ្មោះចូលរៀន</u>
+                    </div>
+                    <br>
+
+
+                    <ul style="line-height: 200%">
+						<li><strong>ខ្ញុំបាទ-នាងខ្ញុំឈ្មោះ:</strong> <span style="font-family: 'Khmer OS Muol Light'">{{_student.khName}}</span> <strong>ជាអក្សរឡាតាំង:</strong> {{_student.enName}} <strong>ភេទ:</strong> {{_student.gender}} <strong>សញ្ជាតិ:</strong> {{_student.nationality}}</li>
+						<li><strong>ថ្ងៃខែឆ្នាំកំណើត:</strong> {{moFormat _student.dob "YYYY-MM-DD"}}</li>
+						<li><strong>ទីកន្លែងកំណើត:</strong> {{_student.pob}}</li>
+						<li><strong>អាសយដ្ឋាន:</strong> {{_student.address}}</li>
+						<li><strong>លេខទូរស័ព្ទ:</strong> {{_student.telephone}}</li>
+						<li><strong>អតីតជាសិស្ស:</strong> {{_student.transform}}</li>
+						<li><strong>ចរិកលក្ខណៈ:</strong> {{_student.behavior}}</li>
+						<li><strong>សុខភាព:</strong> {{_student.health}}</li>
+						<li><strong>សំណូមពរ:</strong> {{_student.request}}</li>
+						<li><strong>ទំនាក់ទំនងបន្ទាន់ឈ្មោះ:</strong> {{_student.emergency.name}} <strong>ត្រូវជា:</strong> {{_student.emergency.relation}} <strong>លេខទូរស័ព្ទ:</strong> {{_student.emergency.contact}}</li>
+						<li><strong>ឪពុកឈ្មោះ:</strong> {{_student.family.fatherName}} <strong>មុខរបរ:</strong> {{_student.family.fatherJob}}</li>
+						<li><strong>ម្តាយឈ្មោះ:</strong> {{_student.family.motherName}} <strong>មុខរបរ:</strong> {{_student.family.motherJob}}</li>
+						<li><strong>សុំចុះឈ្មោះចូលរៀនថ្នាក់ទី:</strong> {{_class.name}} <strong>មុខវិជ្ជា:</strong> {{_class._course.name}} <strong>ផ្នែក :</strong>{{_class._course._department.name}}</li>
+						<li><strong>រយៈពេល:</strong> {{_class._course.term}} ខែ <strong>កាលបរិច្ឆេទចាប់ផ្តើម:</strong> {{moFormat _class.startDate "YYYY-MM-DD"}} <strong>បញ្ចប់:</strong> {{moFormat _class.endDate "YYYY-MM-DD"}}</li>
+						<li><strong>ថ្ងៃសិក្សា:</strong> {{_class.dayOfWeek}} <strong>វេន:</strong> {{_class.group}} <strong>ម៉ោង:</strong> {{_class.time}}</li>
+						<li><strong>គ្រូបង្រៀនឈ្មោះ:</strong> {{_class._teacher.name}} <strong>បន្ទប់:</strong> {{_class._room.name}}</li>
+					</ul>
+                {{/with}}
+
+            {{/with}}
+
+                <div style="clear: both"></div>
+
+                <!--Sign-->
+            <table width="100%" border="0">
+                <tr style="text-align: center">
+                    <td width="60%">
+                        <br>
+                        <strong>ហត្ថលេខាអាណាព្យាបាល</strong>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        ___________________
+                        <br>
+                    </td>
+                    <td>
+					{{#with data}}
+						{{#with content}}
+							ថ្ងៃទី  {{moFormat registerDate "DD"}}  ខែ  {{moFormat registerDate "MM"}}  ឆ្នាំ  {{moFormat registerDate "YYYY"}}
+						{{/with}}
+					{{/with}}
+						<br>
+						<strong>ហត្ថលេខាសាម៉ីខ្លួន</strong>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        ___________________
+                        <br>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 14px">
+                        <strong>* <u>សូមភ្ជាប់មកជាមួយនូវ</u>៖</strong>
+                        <ul>
+                            <li>លិខិតផ្ទេរការសិក្សា (សិស្សដាក់ពាក្យថ្មី)</li>
+                            <li>រូបថត ៤ * ៦ ចំនួនបីសន្លឹក និង ៣ * ៤ ចំនួនមួយសន្លឹក</li>
+                            <li>សំបុត្របញ្ជាក់កំណើតថតចម្លងចំនួនមួយច្បាប់</li>
+                        </ul>
+                    </td>
+                    <td style="text-align: center">
+                        <strong> អ្នកទទួលពាក្យសុំចុះឈ្មោះ</strong>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        ___________________
+                    </td>
+                </tr>
+            </table>
+
+        </span>
+
+        {{/reportTpl}}
+
+        <!--Auto print-->
+        <!--{{autoprint close="true"}}-->
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

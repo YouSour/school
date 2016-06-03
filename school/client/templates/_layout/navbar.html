@@ -1,0 +1,147 @@
+<template name="school_navbar">
+    <li class="{{isActiveRoute name='school.home'}}"><a href="{{pathFor 'school.home'}}">Home</a></li>
+
+  <!--Data-->
+  {{#if isInRole 'data-insert,data-update,data-remove' 'School'}}
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Data <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="{{isActiveRoute name='school.class'}}">
+                <a href="{{pathFor 'school.class'}}">Class</a>
+            </li>
+            <li class="{{isActiveRoute name='school.student'}}">
+                <a href="{{pathFor 'school.student'}}">Student</a>
+            </li>
+
+            <li role="separator" class="divider"></li>
+            <li class="{{isActiveRoute name='school.saleCustomer'}}">
+                <a href="{{pathFor 'school.saleCustomer'}}">Sale - Customer</a>
+            </li>
+
+            <li role="separator" class="divider"></li>
+            <!--<li class="dropdown-header">Setting</li>-->
+            <li class="{{isActiveRoute name='cpanel.exchange'}}">
+                <a href="{{pathFor 'cpanel.exchange'}}">Exchange</a>
+            </li>
+            <li class="{{isActiveRoute name='school.staff'}}">
+                <a href="{{pathFor 'school.staff'}}">Staff</a>
+            </li>
+            <li class="{{isActiveRoute name='school.teacher'}}">
+                <a href="{{pathFor 'school.teacher'}}">Teacher</a>
+            </li>
+            <li class="{{isActiveRoute name='school.room'}}">
+                <a href="{{pathFor 'school.room'}}">Room</a>
+            </li>
+
+        </ul>
+    </li>
+    {{/if}}
+
+    <!--Reports-->
+    {{#if isInRole 'report' 'School'}}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Reports <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <!--<li role="presentation" class="dropdown-header">Education</li>-->
+                <li class="{{isActiveRoute name='school.invoiceGroupReport'}}">
+                    <a href="{{pathFor 'school.invoiceGroupReport'}}">Invoice Group</a>
+                </li>
+                <li class="{{isActiveRoute name='school.studentRegisterReport'}}">
+                    <a href="{{pathFor 'school.studentRegisterReport'}}">Registration</a>
+                </li>
+                <li class="{{isActiveRoute name='school.paymentReport'}}">
+                    <a href="{{pathFor 'school.paymentReport'}}">Payment</a>
+                </li>
+                <li class="{{isActiveRoute name='school.closingRegisterReport'}}">
+                    <a href="{{pathFor 'school.closingRegisterReport'}}">Closing</a>
+                </li>
+                <li class="{{isActiveRoute name='school.registerStatusReport'}}">
+                    <a href="{{pathFor 'school.registerStatusReport'}}">Status</a>
+                </li>
+                <li class="{{isActiveRoute name='school.outstandingRegisterReport'}}">
+                    <a href="{{pathFor 'school.outstandingRegisterReport'}}">Outstanding</a>
+                </li>
+                <li class="{{isActiveRoute name='school.collectionSheetRegisterReport'}}">
+                    <a href="{{pathFor 'school.collectionSheetRegisterReport'}}">Collection Sheet</a>
+                </li>
+                <li class="{{isActiveRoute name='school.collectionSheetRegisterByStudentReport'}}">
+                    <a href="{{pathFor 'school.collectionSheetRegisterByStudentReport'}}">Collection Sheet By Student</a>
+                </li>
+                <li class="{{isActiveRoute name='school.studentHistoryReport'}}">
+                    <a href="{{pathFor 'school.studentHistoryReport'}}">History</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <!--<li role="presentation" class="dropdown-header">Transportation</li>-->
+                <li class="{{isActiveRoute name='school.transportReport'}}">
+                    <a href="{{pathFor 'school.transportReport'}}">Transport</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <!--<li role="presentation" class="dropdown-header">Sale</li>-->
+                <li class="{{isActiveRoute name='school.saleReport'}}">
+                    <a href="{{pathFor 'school.saleReport'}}">Sale</a>
+                </li>
+                <li class="{{isActiveRoute name='school.saleByCategoryReport'}}">
+                    <a href="{{pathFor 'school.saleByCategoryReport'}}">Sale by Category</a>
+                </li>
+                <li class="{{isActiveRoute name='school.groupBySaleItemReport'}}">
+                    <a href="{{pathFor 'school.groupBySaleItemReport'}}">Group by Sale Item</a>
+                </li>
+            </ul>
+        </li>
+    {{/if}}
+
+    <!--Setting-->
+    {{#if isInRole 'setting' 'School'}}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Settings <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <!--Education-->
+                <li role="presentation" class="dropdown-header">Education</li>
+                <li class="{{isActiveRoute name='school.department'}}">
+                    <a href="{{pathFor 'school.department'}}">Department</a>
+                </li>
+                <li class="{{isActiveRoute name='school.course'}}">
+                    <a href="{{pathFor 'school.course'}}">Course</a>
+                </li>
+
+                <!--Sale-->
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header">Sale</li>
+                <li class="{{isActiveRoute name='school.saleCategory'}}">
+                    <a href="{{pathFor 'school.saleCategory'}}">Category</a>
+                </li>
+                <li class="{{isActiveRoute name='school.saleItem'}}">
+                    <a href="{{pathFor 'school.saleItem'}}">Item</a>
+                </li>
+
+                <!--selling item-->
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header">Transportation</li>
+                <li class="{{isActiveRoute name='school.transportItem'}}">
+                    <a href="{{pathFor 'school.transportItem'}}">Item</a>
+                </li>
+
+            </ul>
+        </li>
+    {{/if}}
+
+    <!--Tools-->
+    {{#if isInRole 'admin' 'School'}}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Tools <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li class="{{isActiveRoute name='cpanel.backupRestore'}}">
+                    <a href="{{pathFor 'cpanel.backupRestore'}}">Backup & Restore</a>
+                </li>
+            </ul>
+        </li>
+    {{/if}}
+</template>

@@ -1,0 +1,137 @@
+<!--Form-->
+<template name="school_closingRegisterReport">
+    {{#autoForm schema=School.Schema.ClosingRegisterReport id="school_closingRegisterReport" action="closingRegisterReportGen" target="_blank"}}
+        <div class="row">
+            <div class="col-md-6">
+                {{> afQuickField name='branch'}}
+                {{> afQuickField name='department'}}
+                {{> afQuickField name="course"}}
+                {{> afQuickField name='newOld'}}
+            </div>
+            <div class="col-md-6">
+                {{> afQuickField name='status'}}
+                {{> afQuickField name='date'}}
+                {{> afQuickField name='exchange'}}
+
+                <button type="submit" class="btn btn-primary" id="gen">{{fa "file-text"}} Generate</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+<!--Generate-->
+<template name="school_closingRegisterReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title">
+                        <div class="title-1x-kh-muol">{{khName}}</div>
+                        <div class="title-1x">{{enName}}</div>
+                        <div><u>Closing Registration Report</u></div>
+                        <div class="title-2x">{{enAddress}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Header-->
+                {{#with header}}
+                    <div style="width: 100%">
+                        <div style="width: 50%; float: left">
+                            <div><strong>Branch:</strong> {{branch}}</div>
+                            <div><strong>Department:</strong> {{department}}</div>
+                            <div><strong>Course:</strong> {{course}}</div>
+                            <div><strong>New/Old:</strong> {{newOld}}</div>
+                        </div>
+                        <div style="width: 50%; float: right">
+                            <div><strong>Register Status:</strong> {{status}}</div>
+                            <div><strong>Date:</strong> {{date}}</div>
+                            <div><strong>exchange:</strong> {{exchangeStr}}</div>
+                        </div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                <table class="report-content">
+                    <thead class="content-header">
+                    <tr>
+                        <th>No</th>
+                        <th>Register ID</th>
+                        <th>Student Name</th>
+                        <th>Reg Date</th>
+                        <th>N/O</th>
+                        <th>Class</th>
+                        <th>Course</th>
+                        <th>Department</th>
+                        <th>Term</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Close Date</th>
+                        <th>Reg Status</th>
+                        <th>Sum Of Paid</th>
+                        <th>OS Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="content-body">
+                    {{#each content}}
+                        <tr>
+                            <td>{{index}}</td>
+                            <td>{{_id}}</td>
+                            <td>{{_student.khName}}</td>
+                            <td>{{moFormat registerDate "YYYY-MM-DD"}}</td>
+                            <td>{{newOld}}</td>
+                            <td>{{_class.name}}</td>
+                            <td>{{_class._course.name}}</td>
+                            <td>{{_class._course._department.shortName}}</td>
+                            <td>{{_class._course.term}}</td>
+                            <td>{{moFormat _class.startDate "YYYY-MM-DD"}}</td>
+                            <td>{{moFormat _class.endDate "YYYY-MM-DD"}}</td>
+                            <td>{{moFormat _class.statusDate "YYYY-MM-DD"}}</td>
+                            <td>{{status}}</td>
+                            <td align="right">{{numFormat sumOfPaid "0,0.00"}}</td>
+                            <td align="right">{{numFormat OSAmount "0,0.00"}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+
+                    <!--Total-->
+                    {{#with footer}}
+                        <tfoot class="content-footer">
+                        <!--USD-->
+                        <tr>
+                            <td align="right" colspan="13">Total USD:</td>
+                            <td align="right">{{numFormat subTotalSumOfPaid "0,0.00"}}</td>
+                            <td align="right">{{numFormat subTotalOS "0,0.00"}}</td>
+                        </tr>
+                        <!--KHR-->
+                        <tr>
+                            <td align="right" colspan="13">KHR:</td>
+                            <td align="right">{{numFormat subTotalSumOfPaidKhr "0,0.00"}}</td>
+                            <td align="right">{{numFormat subTotalOSKhr "0,0.00"}}</td>
+                        </tr>
+                        <!--THB-->
+                        <tr>
+                            <td align="right" colspan="13">THB:</td>
+                            <td align="right">{{numFormat subTotalSumOfPaidThb "0,0.00"}}</td>
+                            <td align="right">{{numFormat subTotalOSThb "0,0.00"}}</td>
+                        </tr>
+                        </tfoot>
+                    {{/with}}
+                </table>
+
+            {{/with}}
+
+            <!--Sign-->
+            {{> signFooter}}
+
+        {{/reportTpl}}
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

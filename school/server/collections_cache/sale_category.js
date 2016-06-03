@@ -1,0 +1,1 @@
+School.Collection.SaleCategory.cacheCount('saleItemCount', School.Collection.SaleItem, 'saleCategoryId');

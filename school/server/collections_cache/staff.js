@@ -1,0 +1,1 @@
+School.Collection.Staff.cacheCount('paymentCount', School.Collection.Payment, 'staffId');

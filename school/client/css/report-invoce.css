@@ -1,0 +1,220 @@
+#panel-header {
+    font-weight: bold;
+}
+
+#height-field {
+    height: 48px;
+}
+
+/*
+    Invoice
+*/
+
+#height-row {
+    height: 20px;
+}
+/*
+    Invoice
+*/
+#wrap-body {
+    width: 500px;
+    /*height: 793px;*/
+    /*border: #337ab7 1px solid;*/
+    margin: 0 auto;
+    padding-top: 5px;
+}
+
+#wrap-heady {
+    padding-top: 10px;
+}
+
+#wrap-head-title {
+    border: black 1px solid;
+    height: 40px;
+    width: 100%;
+}
+
+#company-kh-name {
+    text-align: center;
+    font-family: 'Khmer OS Muol';
+    font-size: 16px;
+    padding-left: 0px;
+    border: black 0px solid;
+    width: 400px;
+    float: right;
+}
+
+#company-en-name {
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    /*border: black 1px solid;*/
+    text-align: center;
+    width: 400px;
+    /*padding-left: 0px;*/
+    float: right;
+
+}
+
+#branch-name {
+    font-family: Arial;
+    font-size: 14px;
+    /*border: black 1px solid;*/
+    text-align: center;
+    width: 400px;
+    /*padding-left: 0px;*/
+    margin-top: 15px;
+    float: right;
+
+}
+
+#logo {
+    border: black 0px solid;
+    width: 110px;
+    height: 90px;
+    position: absolute;
+    padding-left: 30px;
+    top: 10px;
+}
+
+#company-address {
+    clear: both;
+    /*border: black 0px solid;*/
+    font-size: 12px;
+    text-align: center;
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    /*border: 0;*/
+    /*height: 1px;*/
+    /*background: #333;*/
+    /*background-image: linear-gradient(to right, #ccc, #333, #ccc);*/
+}
+
+#content {
+    padding: 0px 0px 0px 0px;
+}
+
+#staff {
+    /*border: #999999 1px solid;*/
+    font-size: 12px;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 250px;
+}
+
+#invoice {
+    /*border: #999999 1px solid;*/
+    font-size: 12px;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 175px;
+    float: right;
+    /*padding-left: 23px;*/
+
+}
+
+#table-layout {
+    font-size: 12px;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    color: black;
+
+}
+
+#height-row {
+    height: 25px;
+}
+
+#receipt-title {
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#note {
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    margin-top: 15px;
+}
+
+#receive-date {
+    font-size: 12px;
+    color: black;
+    margin-top: 20px;
+    text-align: right;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+}
+#note {
+    font-size: 12px;
+    font-family: Arial, Verdana, Geneva, sans-serif, "Khmer OS";
+}
+#cashier {
+    text-align: right;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    width: 400px;
+    margin-bottom: 80px;
+}
+
+#service {
+    font-size: 12px;
+    text-align: center;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    margin-top: 20px;
+}
+
+#contact-number {
+    font-size: 12px;
+    padding: 0px 0px 0px 0px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+#powered-by {
+    text-align: center;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    margin-top: 0px;
+    border-top: 1px #000000 solid;
+
+
+}
+
+#footerInvoice {
+    text-align: right;
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    margin: 15px 0px 15px 0px;
+    border-top: 1px #000000 solid;
+    background-color: #d0d2d0 !important;
+
+}
+/*
+end invoice
+*/
+/* Report styles for invoice
+-------------------------------------------------- */
+.report-body-invoice {
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    color: #000000
+}
+
+.report-title-invoice {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #000000;
+}
+
+
+.report-company-name-invoice {
+    font-size: 18px;
+}

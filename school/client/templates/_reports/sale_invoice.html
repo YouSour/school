@@ -1,0 +1,103 @@
+<!--Generate-->
+<template name="school_saleInvoiceReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title">
+                        <img src="/school/kunthea.png" style="float:left; width: 80px; height: 80px">
+                        <img src="/school/hope-brain.png" style="float:right; width: 80px; height: 80px">
+
+                        <div class="title-1x-kh-muol">{{khName}}</div>
+                        <div class="title-1x">{{enName}}</div>
+                        <div><u>Receipt For Sale</u></div>
+                        <br>
+                        <div class="title-2x">{{khAddress}}, Tel: {{telephone}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Header-->
+                {{#with header}}
+                    <div style="width: 100%">
+                        <div style="width: 50%; float: left">
+                            <div><strong>Customer ID:</strong> {{customerId}}</div>
+                            <div><strong>Name:</strong> {{_customer.name}}</div>
+                            <div><strong>Gender:</strong> {{_customer.gender}}</div>
+                            <div><strong>Address:</strong> {{_customer.address}}</div>
+                        </div>
+
+                        <div style="width: 50%; float: right">
+                            <div><strong>Voucher:</strong> {{voucherId}}</div>
+                            <div><strong>Sale Date:</strong> {{moFormat saleDate "YYYY-MM-DD"}}</div>
+                            <div><strong>Staff Name:</strong> {{_staff.name}}</div>
+                            <div><strong>Exchange:</strong>
+                                {{numFormat exchangeRate.USD "0,0.00"}} $
+                                = {{numFormat exchangeRate.KHR "0,0.00"}} R
+                                = {{ numFormat exchangeRate.THB "0,0.00"}} B
+                            </div>
+                        </div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                <table class="report-content">
+                    <thead class="content-header">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="content-body">
+                    {{#each content}}
+                        <tr>
+                            <td>{{index}}</td>
+                            <td>{{itemObj.name}}</td>
+                            <td>{{qty}}</td>
+                            <td>{{numFormat price "$ 0,0.00"}}</td>
+                            <td>{{numFormat discount "0,0.00"}}</td>
+                            <td style="text-align: right">{{numFormat amount "$ 0,0.00"}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                    <tfoot class="content-footer">
+                    <tr style="text-align: right;">
+                        <td colspan="5">Total USD:</td>
+                        <td>{{numFormat header.totalAmount "$ 0,0.00"}}</td>
+                    </tr>
+                    <tr style="text-align: right;">
+                        <td colspan="5">Total Khr:</td>
+                        <td>{{numFormat header.totalKhr "R 0,0.00"}}</td>
+                    </tr>
+                    <tr style="text-align: right;">
+                        <td colspan="5">Total Thb:</td>
+                        <td>{{numFormat header.totalThb "B 0,0.00"}}</td>
+                    </tr>
+                    </tfoot>
+                </table>
+  {{#with header}}
+                <div style="clear: both"></div>
+
+                <!--Sign-->
+                <br>
+
+                {{> signInvoice}}
+{{/with}}
+            {{/with}}
+        {{/reportTpl}}
+
+        <!--Auto print-->
+        <!--{{autoprint close="true"}}-->
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

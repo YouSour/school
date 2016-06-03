@@ -1,0 +1,85 @@
+<!--Generate-->
+<template name="school_transportInvoiceReportGen">
+  <!--Is ready-->
+  {{#if data}}
+      {{#reportTpl options}}
+
+          <table width="100%" border="0">
+              <tr>
+                  <td width="48%">
+                      {{> school_transportInvoiceReportGenDo data=data}}
+                  </td>
+                  <td></td>
+                  <td width="48%">
+                      {{> school_transportInvoiceReportGenDo data=data}}
+                  </td>
+              </tr>
+          </table>
+
+      {{/reportTpl}}
+
+      <!--Auto print-->
+      <!--{{autoprint close="true"}}-->
+
+  {{else}}
+      {{> loading}}
+  {{/if}}
+</template>
+
+<template name="school_transportInvoiceReportGenDo">
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title">
+                        <img src="/school/kunthea.png" style="float:left; width: 80px; height: 80px">
+                        <img src="/school/hope-brain.png" style="float:right; width: 80px; height: 80px">
+
+                        <div class="title-1x-kh-muol">{{khName}}</div>
+                        <div class="title-1x">{{enName}}</div>
+                        <div><u>Receipt For Transportation</u></div>
+                        <br>
+                        <div class="title-2x">{{khAddress}}, Tel: {{telephone}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                {{#with content}}
+                    <div style="width: 100%">
+                        <div style="width: 50%; float: left; line-height: 200%">
+                            <div><strong>Voucher:</strong> {{voucherId}}</div>
+                            <div><strong>Exchange:</strong>
+                                {{numFormat exchangeRate.USD "0,0.00"}} $
+                                = {{numFormat exchangeRate.KHR "0,0.00"}} R
+                                = {{ numFormat exchangeRate.THB "0,0.00"}} B
+                            </div>
+                            <div><strong>Student ID:</strong> {{studentId}}</div>
+                            <div><strong>Student Name:</strong>{{_student.khName}} ({{_student.enName}})</div>
+                            <div><strong>Gender:</strong> {{_student.gender}}</div>
+                            <div><strong>Address:</strong> {{_student.address}}</div>
+                            <div><strong>Location:</strong> {{_item.name}}</div>
+                            <div><strong>Zone:</strong> {{_item.zone}}</div>
+                        </div>
+
+                        <div style="width: 50%; float: right; line-height: 200%">
+                            <div><strong>Transport Date:</strong> {{moFormat transportDate "YYYY-MM-DD"}}</div>
+                            <div><strong>Term:</strong> {{term}} Month(s)</div>
+                            <div><strong>From Date:</strong> {{moFormat fromDate "YYYY-MM-DD"}}</div>
+                            <div><strong>To Date:</strong> {{moFormat toDate "YYYY-MM-DD"}}</div>
+                            <div><strong>Service:</strong> {{serviceParse.name}}</div>
+                            <div><strong>Price:</strong> {{numFormat serviceParse.value "$ 0,0.00"}}</div>
+                            <div><strong>Walve Amount:</strong> {{numFormat walveAmount "$ 0,0.00"}}</div>
+                            <div><strong>Total USD:</strong> {{numFormat totalAmount "$ 0,0.00"}}</div>
+                            <div><strong>Total KHR:</strong> {{numFormat totalKhr "R 0,0.00"}}</div>
+                            <div><strong>Total THB:</strong> {{numFormat totalThb "B 0,0.00"}}</div>
+                        </div>
+                    </div>
+
+                    <div style="clear: both"></div>
+
+                    <!--Sign-->
+                    <br>
+                    {{> signInvoice}}
+                {{/with}}
+            {{/with}}
+</template>

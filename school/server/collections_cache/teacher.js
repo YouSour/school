@@ -1,0 +1,1 @@
+School.Collection.Teacher.cacheCount('classCount', School.Collection.Class, 'teacherId');

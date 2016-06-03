@@ -1,0 +1,77 @@
+<!--Generate-->
+<template name="school_collectionSheetRegisterInvoiceReportGen">
+
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            {{#with data}}
+
+            <!--Title-->
+  {{#each content}}
+  <div style="position:relative;float:left;width:47%;margin: 10px 15px 10px 15px;">
+
+                <div class="title">
+                    <img src="/school/kunthea.png" style="float:left; width: 80px; height: 80px">
+                    <img src="/school/hope-brain.png" style="float:right; width: 80px; height: 80px">
+
+                    <div class="title-1x-kh-muol">{{cKhName}}</div>
+                    <div class="title-1x">{{cEnName}}</div>
+                    <div><u>វិក្ក័យបត្របង់ប្រាក់</u></div>
+                    <br>
+                    <div class="title-2x">{{cKhAddress}}, Tel: {{cTelephone}}</div>
+                </div>
+
+                <!--Content-->
+                <div style="width: 100%">
+
+                    <div style="width: 50%; float: left; line-height: 200%">
+                        <div><strong>លេខកូដចុះឈ្មេាះ:</strong> {{_id}}</div>
+                        <div><strong>ឈ្មេាះសិស្ស:</strong> {{_student.khName}}</div>
+                        <div><strong>ថ្នាក់:</strong> {{_class.name}}</div>
+                        <!-- <div><strong>Room:</strong> {{_class._room.name}}</div>
+                        <div><strong>Teacher:</strong> {{_class._teacher.name}}</div> -->
+                        <div><strong>កាលបរិចេ្ឆទផុតកំណត់:</strong> {{moFormat lastPaymentObj.toDate "YYYY-MM-DD"}}</div>
+                        <!-- <div><strong>Register Status:</strong> {{status}}</div> -->
+                        <div>
+                          <strong>ចំនួនខែ:</strong> {{owedTerm}} ({{numFormat _class._course.baseAmount "$ 0,0.00"}} ក្នុង ១ខែ)
+                        </div>
+                    </div>
+
+                    <div style="width: 50%; float: right; line-height: 200%">
+
+                        <!-- <div>
+                            <strong>Exchange:</strong>
+                            {{numFormat exchangeRate.USD "0,0.00"}} $
+                            = {{numFormat exchangeRate.KHR "0,0.00"}} R
+                            = {{ numFormat exchangeRate.THB "0,0.00"}} B
+                        </div> -->
+                        <!-- <div><strong>Base Amount:</strong> {{numFormat _class._course.baseAmount "0,0.00"}}</div> -->
+                        <div><strong>បា្រក់បានបង់សរុប:</strong> {{numFormat sumOfPaid "$ 0,0.00"}}</div>
+                        <div><strong>ប្រាក់នៅសល់សរុប:</strong> {{numFormat lastPaymentObj.outstandingAmount "$ 0,0.00"}}</div>
+                        <div><strong>ប្រាក់ជំពាក់គ្រាមុន:</strong> {{numFormat lastPaymentObj.owedAmount "$ 0,0.00"}}</div>
+                        <div><strong>ប្រាក់ត្រូវបង់គ្រានេះ:</strong> {{numFormat dueAmount "$ 0,0.00"}}</div>
+                        <div><strong>ប្រាក់សរុបត្រូវបង់:</strong> {{numFormat totalOwedAndDue "$ 0,0.00"}}
+                            <!-- (R {{numFormat totalOwedAndDueKhr "0,0"}} | B {{numFormat totalOwedAndDueThb "0,0"}}) -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div style="clear: both"></div> -->
+
+                <!--Sign-->
+                <!-- <br>
+                <br> -->
+                {{> signCollectionSheetInvoice}}
+</div>
+{{/each}}
+            {{/with}}
+
+            <!--Sign-->
+            <!-- {{> signFooter}} -->
+
+        {{/reportTpl}}
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

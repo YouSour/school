@@ -1,0 +1,166 @@
+<!--Index-->
+<template name="school_student">
+    <p>
+        <button type="button" class="btn btn-primary insert">{{fa "plus"}} Add New</button>
+    </p>
+
+    {{#if isSubReady "school_studentByBranch"}}
+        {{> tabular table=School.TabularTable.Student selector=selector class="table table-striped table-bordered table-condensed table-hover"}}
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>
+
+<!--Action-->
+<template name="school_studentAction">
+    {{#tabularAction}}
+        <li><a href="#" class="update">{{fa "pencil"}} Update</a></li>
+        <li><a href="#" class="remove">{{fa "remove"}} Remove</a></li>
+        <li><a href="#" class="show">{{fa "eye"}} Show</a></li>
+    {{/tabularAction}}
+</template>
+
+<!--Action Register-->
+<template name="school_studentActionTransport">
+    <button type="button" class="btn btn-default btn-sm actionTransport">
+        {{#if _transportCount}}
+            {{_transportCount}}
+        {{else}}
+            0
+        {{/if}}
+    </button>
+</template>
+
+<!--Action Transport-->
+<template name="school_studentActionRegister">
+    <button type="button" class="btn btn-default btn-sm actionRegister">
+        {{#if _registerCount}}
+            {{_registerCount}}
+        {{else}}
+            0
+        {{/if}}
+    </button>
+</template>
+
+<!--Insert-->
+<template name="school_studentInsert">
+    {{#autoForm collection=School.Collection.Student id="school_studentInsert" type="insert"}}
+        <div class="row">
+            <div class="col-md-4">
+                {{> afQuickField name='khName'}}
+                {{> afQuickField name='enName'}}
+                {{> afQuickField name='gender'}}
+                {{> afQuickField name='dob' type="text"}}
+                {{> afQuickField name='pob' rows=2}}
+                {{> afQuickField name='nationality'}}
+                {{> afQuickField name='address' rows=2}}
+                {{> afQuickField name='telephone'}}
+                {{> afQuickField name='transform'}}
+            </div>
+            <div class="col-md-4">
+                {{> afQuickField name='behavior' rows=2}}
+                {{> afQuickField name='health' rows=2}}
+                {{> afQuickField name='request' rows=2}}
+                {{> afQuickField name='emergency'}}
+            </div>
+            <div class="col-md-4">
+                {{> afQuickField name='family'}}
+                {{> afQuickField name='photo'}}
+
+                <button type="submit" class="btn btn-primary">{{fa "floppy-o"}} Save</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+<!--Update-->
+<template name="school_studentUpdate">
+    {{#autoForm collection=School.Collection.Student id="school_studentUpdate" doc=this type="update"}}
+        <div class="row">
+            <div class="col-md-4">
+                {{> afQuickField name='khName'}}
+                {{> afQuickField name='enName'}}
+                {{> afQuickField name='gender'}}
+                {{> afQuickField name='dob' type="text"}}
+                {{> afQuickField name='pob' rows=2}}
+                {{> afQuickField name='nationality'}}
+                {{> afQuickField name='address' rows=2}}
+                {{> afQuickField name='telephone'}}
+                {{> afQuickField name='transform'}}
+            </div>
+            <div class="col-md-4">
+                {{> afQuickField name='behavior' rows=2}}
+                {{> afQuickField name='health' rows=2}}
+                {{> afQuickField name='request' rows=2}}
+                {{> afQuickField name='emergency'}}
+            </div>
+            <div class="col-md-4">
+                {{> afQuickField name='family'}}
+                {{> afQuickField name='photo'}}
+
+                <button type="submit" class="btn btn-primary">{{fa "floppy-o"}} Save</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+<!--Show-->
+<template name="school_studentShow">
+    {{#with data}}
+        <dl class="dl-horizontal">
+            <dt>Id</dt>
+            <dd>{{_id}}</dd>
+            <dt>Khmer Name</dt>
+            <dd>{{khName}}</dd>
+            <dt>English Name</dt>
+            <dd>{{enName}}</dd>
+            <dt>Gender</dt>
+            <dd>{{gender}}</dd>
+            <dt>Date of Birth</dt>
+            <dd>{{moFormat dob "YYYY-MM-DD"}}</dd>
+            <dt>Place of Birth</dt>
+            <dd>{{pob}}</dd>
+            <dt>Nationality</dt>
+            <dd>{{nationality}}</dd>
+            <dt>Address</dt>
+            <dd>{{address}}</dd>
+            <dt>Telephone</dt>
+            <dd>{{telephone}}</dd>
+            <dt>Transform</dt>
+            <dd>{{transform}}</dd>
+            <dt>Behavior</dt>
+            <dd>{{behavior}}</dd>
+            <dt>Health</dt>
+            <dd>{{health}}</dd>
+            <dt>Emergency</dt>
+            <dd>
+                {{#if emergency}}
+                    <ul>
+                        <li><strong>Name:</strong> {{emergency.name}}</li>
+                        <li><strong>Relation:</strong> {{emergency.relation}}</li>
+                        <li><strong>Contact:</strong> {{emergency.contact}}</li>
+                    </ul>
+                {{/if}}
+            </dd>
+            <dt>Family</dt>
+            <dd>
+                {{#if family}}
+                    <ul>
+                        <li>
+                            <strong>Father:</strong> {{family.fatherName}}, <strong>Job:</strong> {{family.fatherJob}}
+                        </li>
+                        <li>
+                            <strong>Mother:</strong> {{family.motherName}}, <strong>Job:</strong> {{family.motherJob}}
+                        </li>
+                    </ul>
+                {{/if}}
+            </dd>
+            <dt>Request</dt>
+            <dd>{{request}}</dd>
+            <dt>Photo</dt>
+            <dd>{{lightbox url=photoUrl title=khName}}</dd>
+        </dl>
+    {{/with}}
+</template>

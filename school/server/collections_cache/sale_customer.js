@@ -1,0 +1,1 @@
+School.Collection.SaleCustomer.cacheCount('saleCount', School.Collection.Sale, 'customerId');

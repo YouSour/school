@@ -1,0 +1,188 @@
+<!--Form-->
+<template name="school_invoiceGroupReport">
+    {{#autoForm schema=School.Schema.InvoiceGroupReport id="school_invoiceGroupReport" action="invoiceGroupReportGen" target="_blank"}}
+        <div class="row">
+            <div class="col-md-6">
+                {{> afQuickField name='student' type="select2" options=studentOpt}}
+                {{> afQuickField name='studyPayment' type="select2" multiple=true options=studyPaymentOpt}}
+            </div>
+            <div class="col-md-6">
+                {{> afQuickField name='transport' type="select2" multiple=true options=transportOpt}}
+                {{> afQuickField name='exchange'}}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="gen">{{fa "file-text"}} Generate</button>
+        <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+    {{/autoForm}}
+</template>
+
+
+<!--Generate-->
+<template name="school_invoiceGroupReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title">
+                        <img src="/school/kunthea.png" style="float:left; width: 80px; height: 80px">
+                        <img src="/school/hope-brain.png" style="float:right; width: 80px; height: 80px">
+
+                        <div class="title-1x-kh-muol">{{khName}}</div>
+                        <div class="title-1x">{{enName}}</div>
+                        <div><u>Receipt Group For Study Fee</u></div>
+                        <br>
+                        <div class="title-2x">{{khAddress}}, Tel: {{telephone}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Header-->
+                {{#with header}}
+                    <div style="width: 100%">
+                        <div style="width: 50%; float: left">
+                            <div><strong>Student ID:</strong> {{_id}}</div>
+                            <div><strong>Kh Name:</strong> {{khName}}</div>
+                            <div><strong>En Name:</strong> {{enName}}</div>
+                            <div><strong>Gender:</strong> {{gender}}</div>
+                            <div><strong>Telephone:</strong> {{telephone}}</div>
+                        </div>
+                        <div style="width: 50%; float: right">
+                            <div><strong>Exchange:</strong> {{exchangeStr}}</div>
+                            <div><strong>Emergency:</strong>
+                                <ul>
+                                    <li>Name: {{emergency.name}}</li>
+                                    <li>Relation: {{emergency.relation}}</li>
+                                    <li>Contact: {{emergency.contact}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                    <!--Payment Info-->
+                    <table class="report-content" width="100%">
+                        <caption>Study Payment Info</caption>
+                        <thead class="content-header">
+                        <tr>
+                            <th>Register ID</th>
+                            <th>Class</th>
+                            <th>Paid Date</th>
+                            <th>Method</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Total</th>
+                            <th>Paid</th>
+                            <th>Owed</th>
+                            <th>Outstanding</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="content-body">
+                            {{#each content}}
+                          <tr>
+                            <td>{{registerId}}</td>
+                            <td>{{_register._class.name}}</td>
+                            <td>{{moFormat paymentDate "YYYY-MM-DD"}}</td>
+                            <td>{{paymentMethodObj}}</td>
+                            <td>{{moFormat fromDate "YYYY-MM-DD"}}</td>
+                            <td>{{moFormat toDate "YYYY-MM-DD"}}</td>
+                            <td>{{totalAmount}}</td>
+                            <td>{{paidAmount}}</td>
+                            <td>{{owedAmount}}</td>
+                            <td>{{outstandingAmount}}</td>
+                          </tr>
+                            {{/each}}
+
+                            <tr>
+                                <td colspan="6" style="border-left-style: hidden;border-bottom-style: hidden; text-align: right;"><b>Total</b></td>
+                                <td>{{numFormat footer.totalAmount "$ 0,0.00"}}</td>
+                                <td>{{numFormat footer.totalPaidAmount "$ 0,0.00"}}</td>
+                                <td>{{numFormat footer.totalOwedAmount "$ 0,0.00"}}</td>
+                                <td>{{numFormat footer.totalOutstandingAmount "$ 0,0.00"}}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="border-left-style: hidden;border-bottom-style: hidden; text-align: right;"></td>
+                                <td>R {{numFormat footer.totalKhrAmount "0,0"}}</td>
+                                <td>R {{numFormat footer.paidKhrAmount "0,0"}}</td>
+                                <td>R {{numFormat footer.owedKhrAmount "0,0"}}</td>
+                                <td>R {{numFormat footer.outstandingKhrAmount "0,0"}}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" style="border-left-style: hidden;border-bottom-style: hidden; text-align: right;"></td>
+                                <td>B {{numFormat footer.totatThbAmount "0,0"}}</td>
+                                <td>B {{numFormat footer.paidThbAmount "0,0"}}</td>
+                                <td>B {{numFormat footer.owedThbAmount "0,0"}}</td>
+                                <td>B {{numFormat footer.outstandingThbAmount "0,0"}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!--Transport Info-->
+                    <table class="report-content" width="100%">
+                        <caption>Transport Payment Info</caption>
+                        <thead class="content-header">
+                        <tr>
+                            <th>Transport Date</th>
+                            <th>Location</th>
+                            <th>Zone</th>
+                            <th>Term</th>
+                            <th>Service</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Total Amount</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="content-body">
+                        {{#each contentTransport}}
+                            <tr>
+                                <td>{{moFormat transportDate "YYYY-MM-DD"}}</td>
+                                <td>{{_item.name}}</td>
+                                <td>{{_item.zone}}</td>
+                                <td>{{term}}</td>
+                                <td>{{serviceObj}}</td>
+                                <td>{{moFormat fromDate "YYYY-MM-DD"}}</td>
+                                <td>{{moFormat toDate "YYYY-MM-DD"}}</td>
+                                <td>{{totalAmount}}</td>
+                            </tr>
+                        {{/each}}
+                        <tr>
+                            <td colspan="7" style="border-left-style: hidden;border-bottom-style: hidden; text-align: right;"><b>Total</b></td>
+                            <td>{{numFormat footer.totalTransportPayment "$ 0,0.00"}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="border-left-style: hidden;border-bottom-style: hidden; text-align: right;"></td>
+                            <td>R {{numFormat footer.totalTransportPaymentKhr "0,0"}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="border-left-style: hidden;border-bottom-style: hidden; text-align: right;"></td>
+                            <td>B {{numFormat footer.totalTransportPaymentThb "0,0"}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+  <div id="footerInvoice">
+    <p><h5><b>Total Paid : {{numFormat footer.grandTotal "$ 0,0.00"}}</b></h5></p>
+    <p><h5><b>R {{numFormat footer.grandTotalKhr "0,0"}}</b></h5></p>
+    <p><h5><b>B {{numFormat footer.grandTotalThb "0,0"}}</b></h5></p>
+  </div>
+
+            {{/with}}
+
+            <!--Sign-->
+            <br>
+            {{> signInvoiceGroup}}
+
+        {{/reportTpl}}
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

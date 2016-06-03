@@ -1,0 +1,87 @@
+<!--Index-->
+<template name="school_registerStatus">
+    <p>
+        <button type="button" class="btn btn-primary insert">{{fa "plus"}} Add New</button>
+
+        <!--Register Info-->
+    <div class="pull-right" style="display: inline">
+        <small>
+            {{#if isSubReady "school_registerById"}}
+                {{#with register}}
+                    {{lightbox url=_student.photoUrl title=_.student.khName}}
+                    <a href="#" class="jsRegisterInfo">
+                        <strong>{{studentId}}:</strong> {{_student.khName}} ({{_student.enName}}) |
+                        <strong>Reg Date:</strong> {{moFormat registerDate "YYYY-MM-DD"}} |
+                        <strong>Class:</strong> {{_class.name}}
+                    </a>
+                {{/with}}
+            {{else}}
+                {{> iconLoading}}
+            {{/if}}
+        </small>
+    </div>
+    </p>
+
+    {{#if isSubReady "school_registerStatusByRegister"}}
+        {{> tabular table=School.TabularTable.RegisterStatus selector=selector class="table table-striped table-bordered table-condensed table-hover"}}
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>
+
+<!--Action-->
+<template name="school_registerStatusAction">
+    {{#tabularAction}}
+        <li><a href="#" class="update">{{fa "pencil"}} Update</a></li>
+        <li><a href="#" class="remove">{{fa "remove"}} Remove</a></li>
+        <!--<li><a href="#" class="show">{{fa "eye"}} Show</a></li>-->
+    {{/tabularAction}}
+</template>
+
+<!--Insert-->
+<template name="school_registerStatusInsert">
+    {{#autoForm collection=School.Collection.RegisterStatus id="school_registerStatusInsert" type="insert"}}
+        <div class="row">
+            <div class="col-md-12">
+                {{> afQuickField name='registerId' type="hidden" value=registerId}}
+                {{> afQuickField name='statusDate' type="text"}}
+                {{> afQuickField name='status'}}
+                {{> afQuickField name='des' rows=3}}
+
+                <button type="submit" class="btn btn-primary">{{fa "floppy-o"}} Save</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+<!--Update-->
+<template name="school_registerStatusUpdate">
+    {{#autoForm collection=School.Collection.RegisterStatus id="school_registerStatusUpdate" doc=this type="update"}}
+        <div class="row">
+            <div class="col-md-12">
+                {{> afQuickField name='registerId' type="hidden"}}
+                {{> afQuickField name='statusDate' type="text"}}
+                {{> afQuickField name='status'}}
+                {{> afQuickField name='des' rows=3}}
+
+                <button type="submit" class="btn btn-primary">{{fa "floppy-o"}} Save</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+<!--Show-->
+<template name="school_registerStatusShow">
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>{{_id}}</dd>
+        <dt>Status Date</dt>
+        <dd>{{statusDate}}</dd>
+        <dt>Status</dt>
+        <dd>{{status}}</dd>
+        <dt>Description</dt>
+        <dd>{{des}}</dd>
+    </dl>
+</template>

@@ -1,0 +1,163 @@
+<!--Form-->
+<template name="school_studentHistoryReport">
+    {{#autoForm schema=School.Schema.StudentHistoryReport id="school_studentHistoryReport" action="studentHistoryReportGen" target="_blank"}}
+        <div class="row">
+            <div class="col-md-6">
+                {{> afQuickField name='student' type="select2" options=studentOpt}}
+            </div>
+            <div class="col-md-6">
+                {{> afQuickField name='register' type="select2" options=registerOpt}}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="gen">{{fa "file-text"}} Generate</button>
+        <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+    {{/autoForm}}
+</template>
+
+
+<!--Generate-->
+<template name="school_studentHistoryReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title">
+                        <div class="title-1x-kh-muol">{{khName}}</div>
+                        <div class="title-1x">{{enName}}</div>
+                        <div><u>Student History Report</u></div>
+                        <div class="title-2x">{{enAddress}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Header-->
+                {{#with header}}
+                    <div style="width: 100%">
+                        <div style="width: 50%; float: left">
+                            <div><strong>Student ID:</strong> {{_id}}</div>
+                            <div><strong>Kh Name:</strong> {{khName}}</div>
+                            <div><strong>En Name:</strong> {{enName}}</div>
+                            <div><strong>Gender:</strong> {{gender}}</div>
+                            <div><strong>Telephone:</strong> {{telephone}}</div>
+                        </div>
+                        <div style="width: 50%; float: right">
+                            <div><strong>Emergency:</strong>
+                                <ul>
+                                    <li>Name: {{emergency.name}}</li>
+                                    <li>Relation: {{emergency.relation}}</li>
+                                    <li>Contact: {{emergency.contact}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                {{#each content}}
+                    <!--Register Info-->
+                    <div style="font-size: 16px; clear: both;"><u><strong>Register ID: {{_id}}</strong></u></div>
+                    <div style="width: 100%;">
+                        <div style="width: 35%; float: left">
+                            <!--<div><strong>Register ID: {{_id}}</strong></div>-->
+                            <div><strong>Register Date:</strong> {{moFormat registerDate "YYYY-MM-DD"}}</div>
+                            <div><strong>New/Old:</strong> {{newOld}}</div>
+                            <div><strong>Class:</strong> {{_class.name}}</div>
+                            <div><strong>Course:</strong> {{_class._course._department.name}}</div>
+                            <div><strong>Department:</strong> {{_class._course.name}}</div>
+                        </div>
+                        <div style="width: 65%; float: right">
+                            <div style="width: 50%; float: left">
+                                <div><strong>Status:</strong> {{_class.status}}</div>
+                                <div><strong>Status Date:</strong> {{moFormat _class.statusDate "YYYY-MM-DD"}}</div>
+                                <div><strong>Start Date:</strong> {{moFormat _class.startDate "YYYY-MM-DD"}}</div>
+                                <div><strong>End Date:</strong> {{moFormat _class.endDate "YYYY-MM-DD"}}</div>
+                            </div>
+                            <div style="width: 50%; float: right">
+                                <div><strong>Teacher:</strong> {{_class._teacher.name}}</div>
+                                <div><strong>Room:</strong> {{_class._room.name}}</div>
+                                <div><strong>Day Of Work:</strong> {{_class.dayOfWeek}}</div>
+                                <div><strong>Group:</strong> {{_class.group}}</div>
+                                <div><strong>Time:</strong> {{_class.time}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Payment Info-->
+                    <table class="report-content" width="100%">
+                        <caption>Payment Info</caption>
+                        <thead class="content-header">
+                        <tr>
+                            <th>Paid Date</th>
+                            <!--<th>Method</th>-->
+                            <th>Sum Of Paid</th>
+                            <th>Due Amount</th>
+                            <th>Dis Amount</th>
+                            <th>Total Amount</th>
+                            <th>Paid Amount</th>
+                            <th>Owed Amount</th>
+                            <th>Status</th>
+                            <th>OS Amount</th>
+                            <th>F-Date</th>
+                            <th>T-Date</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="content-body">
+                        {{#each _paymentBack}}
+                            <tr>
+                                <td>{{moFormat paymentDate "YYYY-MM-DD"}}</td>
+                                <!--<td>{{paymentMethodObj.term}}</td>-->
+                                <td align="right">{{numFormat sumOfPaid "0,0.00"}}</td>
+                                <td align="right">{{numFormat dueAmount "0,0.00"}}</td>
+                                <td align="right">{{numFormat discountAmount "0,0.00"}}</td>
+                                <td align="right">{{numFormat totalAmount "0,0.00"}}</td>
+                                <td align="right">{{numFormat paidAmount "0,0.00"}}</td>
+                                <td align="right">{{numFormat owedAmount "0,0.00"}}</td>
+                                <td>{{status}}</td>
+                                <td align="right">{{numFormat outstandingAmount "0,0.00"}}</td>
+                                <td>{{moFormat fromDate "YYYY-MM-DD"}}</td>
+                                <td>{{moFormat toDate "YYYY-MM-DD"}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+                    <!--Status Info-->
+                    <table class="report-content" width="100%">
+                        <caption>Status Info</caption>
+                        <thead class="content-header">
+                        <tr>
+                            <th>Status Date</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="content-body">
+                        {{#each _statusBack}}
+                            <tr>
+                                <td>{{moFormat statusDate "YYYY-MM-DD"}}</td>
+                                <td>{{status}}</td>
+                                <td>{{des}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+                {{/each}}
+
+            {{/with}}
+
+            <!--Sign-->
+            <!--{{> signFooter}}-->
+
+        {{/reportTpl}}
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

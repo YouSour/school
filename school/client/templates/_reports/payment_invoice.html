@@ -1,0 +1,96 @@
+<!--Generate-->
+<template name="school_paymentInvoiceReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            <table width="100%" border="0">
+                <tr>
+                    <td width="48%">
+                        {{> school_paymentInvoiceReportGenDo data=data}}
+                    </td>
+                    <td></td>
+                    <td width="48%">
+                        {{> school_paymentInvoiceReportGenDo data=data}}
+                    </td>
+                </tr>
+            </table>
+
+        {{/reportTpl}}
+
+        <!--Auto print-->
+        <!--{{autoprint close="true"}}-->
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>
+
+<template name="school_paymentInvoiceReportGenDo">
+    {{#with data}}
+
+        <!--Title-->
+        {{#with title}}
+            <div class="title">
+                <img src="/school/kunthea.png" style="float:left; width: 80px; height: 80px">
+                <img src="/school/hope-brain.png" style="float:right; width: 80px; height: 80px">
+
+                <div class="title-1x-kh-muol">{{khName}}</div>
+                <div class="title-1x">{{enName}}</div>
+                <div><u>Receipt For Study Fee</u></div>
+                <br>
+                <div class="title-2x">{{khAddress}}, Tel: {{telephone}}</div>
+            </div>
+        {{/with}}
+
+        <!--Content-->
+        {{#with content}}
+            <div style="width: 100%">
+                <div style="width: 50%; float: left; line-height: 200%">
+                    <div><strong>Voucher:</strong> {{voucherId}}</div>
+                    <div><strong>Register ID:</strong> {{registerId}}</div>
+                    <div><strong>Student Name:</strong>{{_register._student.khName}} ({{_register._student.enName}})</div>
+                    <div><strong>Gender:</strong> {{_register._student.gender}}</div>
+                    <div><strong>Address:</strong> {{_register._student.address}}</div>
+                    <div><strong>New/Old:</strong> {{_register.newOld}}</div>
+                    <div><strong>Class:</strong> {{_register._class.name}}</div>
+                    <div><strong>Course:</strong> {{_register._class._course.name}}</div>
+                    <div><strong>Department:</strong> {{_register._class._course._department.name}}</div>
+                    <div><strong>Room:</strong> {{_register._class._room.name}}</div>
+                    <div><strong>Teacher:</strong> {{_register._class._teacher.name}}</div>
+                </div>
+
+                <div style="width: 50%; float: right; line-height: 200%">
+                    <div>
+                        <strong>Exchange:</strong>
+                        {{numFormat exchangeRate.USD "0,0.00"}} $
+                        = {{numFormat exchangeRate.KHR "0,0.00"}} R
+                        = {{ numFormat exchangeRate.THB "0,0.00"}} B
+                    </div>
+                    <div><strong>Payment Date:</strong> {{moFormat paymentDate "YYYY-MM-DD"}}</div>
+                    <div><strong>Payment Method:</strong> {{paymentMethodObj.term}} Month(s)</div>
+                    <div><strong>From Date:</strong> {{moFormat fromDate "YYYY-MM-DD"}}</div>
+                    <div><strong>To Date:</strong> {{moFormat toDate "YYYY-MM-DD"}}</div>
+                    <div><strong>Due Amount:</strong> {{numFormat dueAmount "$ 0,0.00"}}</div>
+                    <div><strong>Discount Amount:</strong> {{numFormat discountAmount "$ 0,0.00"}}</div>
+                    <div><strong>Total Amount:</strong>
+                        {{numFormat totalAmount "$ 0,0.00"}}
+                        (R {{numFormat totalKhr "0,0"}} | B {{numFormat totalThb "0,0"}})
+                    </div>
+                    <div><strong>Paid Amount:</strong> {{numFormat paidAmount "$ 0,0.00"}}</div>
+                    <div><strong>Owed Amount:</strong> {{numFormat owedAmount "$ 0,0.00"}}</div>
+                    <div><strong>Outstanding Amount:</strong> {{numFormat outstandingAmount "$ 0,0.00"}}</div>
+                </div>
+            </div>
+
+            <div style="clear: both"></div>
+
+            <!--Sign-->
+            <br>
+            {{> signInvoice}}
+
+        {{/with}}
+
+    {{/with}}
+
+</template>

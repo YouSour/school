@@ -1,0 +1,137 @@
+<!--Form-->
+<template name="school_collectionSheetRegisterByStudentReport">
+    {{#autoForm schema=School.Schema.CollectionSheetRegisterByStudentReport id="school_collectionSheetRegisterByStudentReport" action="collectionSheetRegisterByStudentReportGen" target="_blank"}}
+        <div class="row">
+            <div class="col-md-6">
+                {{> afQuickField name='branch'}}
+                {{> afQuickField name='department'}}
+                {{> afQuickField name='course'}}
+                {{> afQuickField name='class'}}
+            </div>
+            <div class="col-md-6">
+                {{> afQuickField name='register'}}
+                {{> afQuickField name='status'}}
+                {{> afQuickField name='date'}}
+                {{> afQuickField name='exchange'}}
+
+                <button type="submit" class="btn btn-primary" id="gen">{{fa "file-text"}} Generate</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+<!--Generate-->
+<template name="school_collectionSheetRegisterByStudentReportGen">
+  <!--Is ready-->
+  {{#if data}}
+      {{#reportTpl options}}
+
+          {{#with data}}
+
+          <!--Title-->
+{{#each content}}
+<div style="margin-left: 20px; width: 100%;">
+              <div class="title">
+                  <img src="/school/kunthea.png" style="float:left; width: 80px; height: 80px">
+                  <img src="/school/hope-brain.png" style="float:right; width: 80px; height: 80px">
+
+                  <div class="title-1x-kh-muol">{{companyInfo.cKhName}}</div>
+                  <div class="title-1x">{{companyInfo.cEnName}}</div>
+                  <div><u>វិក្ក័យបត្រត្រូវបង់ប្រាក់</u></div>
+                  <br>
+                  <div class="title-2x">{{companyInfo.cKhAddress}}, Tel:{{companyInfo.cTelephone}} </div>
+              </div>
+              <!--Content-->
+              <div style="width: 100%">
+
+                  <div style="width: 50%; float: left; line-height: 200%;margin-bottom: 10px;">
+                      <div><strong>លេខកូដសិស្ស: </strong>{{studentId}}</div>
+                  </div>
+                  <div style="width: 50%; float: left; line-height: 200%;margin-bottom: 10px;">
+                    <div><strong>ឈ្មេាះសិស្ស: </strong>{{_student.khName}} ({{_student.enName}})</div>
+                  </div>
+                  <div style="width: 50%; float: left; line-height: 200%;margin-bottom: 10px;">
+                      <div><strong>លេខទូរស័ព្ទ: </strong>{{_student.telephone}}</div>
+                  </div>
+                  <div style="width: 50%; float: right; line-height: 200%;margin-bottom: 10px;">
+                      <div><strong>អាត្រាប្តូរប្រាក់: </strong>{{exchange}}</div>
+                  </div>
+
+                  <table class="report-content">
+                      <thead class="content-header">
+                      <tr>
+                          <th>ថ្នាក់</th>
+                          <th>ផុតកំណត់</th>
+                          <th>ចំនួនខែយឺត</th>
+                          <th>សមតុល្យ</th>
+                          <th>ជំពាក់គ្រាមុន</th>
+                          <th>ប្រាក់បង់គ្រានេះ</th>
+                          <th>ប្រាក់សរុប</th>
+                      </tr>
+                      </thead>
+
+                      <tbody class="content-body">
+                          {{#each _registerPayment}}
+                          <tr>
+                              <td>{{class}}</td>
+                              <td>{{moFormat expiredDate "YYYY-MM-DD"}}</td>
+                              <!-- <td>{{lastMethod}}</td> -->
+                              <td>{{owedTerm}} ({{numFormat baseAmount "0,0.00 $"}} ក្នុង ១ខែ)</td>
+                              <td>{{numFormat outStandingAmount "0,0.00 $"}}</td>
+                              <td>{{numFormat owedAmount "0,0.00 $"}}</td>
+                              <td>{{numFormat dueAmount "0,0.00 $"}}</td>
+                              <td>{{numFormat totalOwedAndDue "0,0.00 $"}}</td>
+                          </tr>
+                        {{/each}}
+                      </tbody>
+
+                  </table>
+
+                  <table class="report-content">
+                      <thead class="content-header">
+                      <tr>
+                          <th>ចាប់ផ្តើម</th>
+                          <th>ផុតកំណត់</th>
+                          <th>ខែ</th>
+                          <th>សេវាកម្ម</th>
+                          <th>ប្រាក់សរុប</th>
+                      </tr>
+                      </thead>
+
+                      <tbody class="content-body">
+                          {{#each _registerTransport}}
+                          <tr>
+                              <td>{{moFormat transportDate "YYYY-MM-DD"}}</td>
+                              <td>{{moFormat expiredDate "YYYY-MM-DD"}}</td>
+                              <td>{{term}} ខែ</td>
+                              <td>{{service}}</td>
+                              <td>{{numFormat totalAmount "0,0.00 $"}}</td>
+                          </tr>
+                        {{/each}}
+
+                      </tbody>
+
+                  </table>
+              </div>
+              <p class="pull-right">
+                <h5>
+                  <b>ប្រាក់សរុបត្រូវបង់: {{numFormat grandTotal "0,0.00 $"}} ({{numFormat grandTotalKhr "0,0"}} R | {{numFormat grandTotalThb "0,0"}} B)</b>
+                </h5>
+              </p>
+              <!--Sign-->
+              <br>
+              {{> signCollectionSheetInvoice}}
+</div>
+{{#if getIndex index}}
+ <p style="page-break-after:always"></p>
+{{/if}}
+{{/each}}
+          {{/with}}
+
+      {{/reportTpl}}
+
+  {{else}}
+      {{> loading}}
+  {{/if}}
+</template>

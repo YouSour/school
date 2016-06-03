@@ -1,0 +1,117 @@
+<!--Form-->
+<template name="school_saleByCategoryReport">
+    {{#autoForm schema=School.Schema.SaleByCategoryReport id="school_saleByCategoryReport" action="saleByCategoryReportGen" target="_blank"}}
+        <div class="row">
+            <div class="col-md-6">
+                {{> afQuickField name='branch'}}
+                {{> afQuickField name='category'}}
+                {{> afQuickField name='date'}}
+            </div>
+            <div class="col-md-6">
+                {{> afQuickField name='exchange'}}
+
+                <button type="submit" class="btn btn-primary" id="gen">{{fa "file-text"}} Generate</button>
+                <button type="reset" class="btn btn-default">{{fa "refresh"}} Reset</button>
+            </div>
+        </div>
+    {{/autoForm}}
+</template>
+
+
+<!--Generate-->
+<template name="school_saleByCategoryReportGen">
+    <!--Is ready-->
+    {{#if data}}
+        {{#reportTpl options}}
+
+            {{#with data}}
+
+                <!--Title-->
+                {{#with title}}
+                    <div class="title">
+                        <div class="title-1x-kh-muol">{{khName}}</div>
+                        <div class="title-1x">{{enName}}</div>
+                        <div><u>Sale By Category Report</u></div>
+                        <div class="title-2x">{{enAddress}}</div>
+                    </div>
+                {{/with}}
+
+                <!--Header-->
+                {{#with header}}
+                    <div style="width: 100%">
+                        <div style="width: 50%; float: left">
+                            <div><strong>Branch:</strong> {{branch}}</div>
+                            <div><strong>Category:</strong> {{category}}</div>
+                        </div>
+                        <div style="width: 50%; float: right">
+                            <div><strong>Date:</strong> {{date}}</div>
+                            <div><strong>Exchange:</strong> {{exchangeStr}}</div>
+                        </div>
+                    </div>
+                {{/with}}
+
+                <!--Content-->
+                <table class="report-content">
+                    <thead class="content-header">
+                    <tr>
+                        <th>No</th>
+                        <th>Sale Date</th>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Category Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Discount (%)</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="content-body">
+                    {{#each content}}
+                        <tr>
+                            <td>{{index}}</td>
+                            <td>{{moFormat saleDate "YYYY-MM-DD"}}</td>
+                            <td>{{items.itemId}}</td>
+                            <td>{{itemInfo.name}}</td>
+                            <td>{{itemInfo._saleCategory.name}}</td>
+                            <td>{{items.qty}}</td>
+                            <td align="right">{{numFormat items.price "0,0.00"}}</td>
+                            <td>{{items.discount}}</td>
+                            <td align="right">{{numFormat items.amount "0,0.00"}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+
+                    <!--Total-->
+                    {{#with footer}}
+                        <tfoot class="content-footer">
+                        <!--USD-->
+                        <tr>
+                            <td align="right" colspan="8">Sub Total USD:</td>
+                            <td align="right">{{numFormat subTotal "0,0.00"}}</td>
+                        </tr>
+                        <!--KHR-->
+                        <tr>
+                            <td align="right" colspan="8">KHR:</td>
+                            <td align="right">{{numFormat subTotalKhr "0,0.00"}}</td>
+                        </tr>
+                        <!--THB-->
+                        <tr>
+                            <td align="right" colspan="8">THB:</td>
+                            <td align="right">{{numFormat subTotalThb "0,0.00"}}</td>
+                        </tr>
+                        </tfoot>
+                    {{/with}}
+                </table>
+
+            {{/with}}
+
+            <!--Sign-->
+            {{> signFooter}}
+
+        {{/reportTpl}}
+
+    {{else}}
+        {{> loading}}
+    {{/if}}
+</template>

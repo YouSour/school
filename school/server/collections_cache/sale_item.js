@@ -1,0 +1,1 @@
+School.Collection.SaleItem.cacheDoc('saleCategory', School.Collection.SaleCategory, ['name', 'shortName']);

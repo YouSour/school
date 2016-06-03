@@ -1,0 +1,1 @@
+School.Collection.Department.cacheCount('courseCount', School.Collection.Course, 'departmentId');

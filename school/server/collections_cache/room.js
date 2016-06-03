@@ -1,0 +1,1 @@
+School.Collection.Room.cacheCount('classCount', School.Collection.Class, 'roomId');
