@@ -248,6 +248,7 @@ Meteor.methods({
           obj.owedTerm = owedTerm;
 
           var dueAmountTmp = obj._class._course.baseAmount * owedTerm;
+          
           if(!_.isUndefined(obj.lastMethodCost)){
             dueAmountTmp = obj.lastMethodCost * obj.multiplicand;
           }

@@ -59,6 +59,9 @@ Meteor.methods({
     if (!_.isEmpty(params.newOld)) {
       selector.newOld = params.newOld;
     }
+    if (!_.isEmpty(params.register)) {
+      selector._id = params.register;
+    }
 
     var index = 1;
     // Exchange
@@ -99,6 +102,7 @@ Meteor.methods({
           }
         }
         obj.status = status;
+        obj.lastMethod = obj._class._course.paymentMethod[0].cost + " $ (" + obj._class._course.paymentMethod[0].term + "ខែ)";
 
         var resultStatus = true;
         if (!_.isEmpty(params.status) && params.status != status) {
@@ -136,6 +140,17 @@ Meteor.methods({
               moment(lastPayment.fromDate).format('YYYY-MM-DD') <
               moment(date).format('YYYY-MM-DD') && lastPayment.owedAmount >
               0))) {
+            var convertPaymentMethod = JSON.parse(lastPayment.paymentMethod);
+            obj.lastMethodCost = convertPaymentMethod.cost;
+            obj.lastMethod = convertPaymentMethod.cost+" $​ ("+ convertPaymentMethod.term +"ខែ)";
+
+            //multiplicand
+            var monthDiff = moment(date).diff(moment(lastPayment.paymentDate),
+              'months') + 1;
+
+              var multiplicandTmp = math.round(monthDiff / convertPaymentMethod.term);
+              obj.multiplicand = multiplicandTmp;
+
             // Payment status
             if (lastPayment.status == 'Close') {
               resultPayment = false;
@@ -143,7 +158,8 @@ Meteor.methods({
               obj.lastPaymentObj = lastPayment;
               obj.sumOfPaid = lastPayment.sumOfPaid;
               obj.OSAmount = lastPayment.outstandingAmount;
-
+              obj.lastOverDue = lastPayment.owedAmount;
+              obj.oAmount = lastPayment.owedAmount;
               lastOwed = obj.lastPaymentObj.owedAmount;
 
               subTotalSumOfPaid += obj.sumOfPaid;
@@ -161,20 +177,33 @@ Meteor.methods({
           } else {
             resultPayment = false;
           }
+        }else{
+            obj.multiplicand = owedTerm;
         }
 
         /*** Result ***/
         if (resultStatus && resultPayment) {
           obj.owedTerm = owedTerm;
+
           var dueAmountTmp = obj._class._course.baseAmount * owedTerm;
+
+          if(!_.isUndefined(obj.lastMethodCost)){
+            dueAmountTmp = obj.lastMethodCost * obj.multiplicand;
+          }
 
           // Check due amount with os
           if (dueAmountTmp > obj.OSAmount) {
-            dueAmountTmp = obj.OSAmount;
+            dueAmountTmp = obj.OSAmount - obj.lastOverDue ;
           }
+
+          // //check dueAmountTmp nan
+          if (_.isNaN(dueAmountTmp)){
+            dueAmountTmp = obj.OSAmount
+          }
+
           obj.dueAmount = dueAmountTmp;
           subTotalDue += obj.dueAmount;
-
+          
           obj.totalOwedAndDue = lastOwed + obj.dueAmount;
 
           //convert USD To KHR on TotalAmount CollectionSheet Invoice
@@ -208,10 +237,13 @@ Meteor.methods({
             class: obj._class.name,
             group: obj._class.group,
             expiredDate: expiredDateTemp,
+            lastMethod: obj.lastMethod,
+            multiplicand: obj.multiplicand,
             owedTerm: obj.owedTerm,
             baseAmount: obj._class._course.baseAmount,
             owedAmount: obj.oAmount,
             dueAmount: obj.dueAmount,
+            osAmount: obj.OSAmount,
             totalOwedAndDue: obj.totalOwedAndDue
           };
 

@@ -63,11 +63,12 @@
                       <tr>
                           <th>ថ្នាក់</th>
                           <th>ផុតកំណត់</th>
-                          <th>ចំនួនខែយឺត</th>
-                          <th>សមតុល្យ</th>
                           <th>ជំពាក់គ្រាមុន</th>
+                          <th>បង់ចុងក្រោយ</th>
+                          <th>វគ្គ</th>
                           <th>ប្រាក់បង់គ្រានេះ</th>
                           <th>ប្រាក់សរុប</th>
+                          <th>សមតុល្យ</th>
                       </tr>
                       </thead>
 
@@ -77,11 +78,12 @@
                               <td>{{class}}</td>
                               <td>{{moFormat expiredDate "YYYY-MM-DD"}}</td>
                               <!-- <td>{{lastMethod}}</td> -->
-                              <td>{{owedTerm}} ({{numFormat baseAmount "0,0.00 $"}} ក្នុង ១ខែ)</td>
-                              <td>{{numFormat outStandingAmount "0,0.00 $"}}</td>
                               <td>{{numFormat owedAmount "0,0.00 $"}}</td>
+                              <td>{{lastMethod}}</td>
+                              <td>{{multiplicand}}</td>
                               <td>{{numFormat dueAmount "0,0.00 $"}}</td>
                               <td>{{numFormat totalOwedAndDue "0,0.00 $"}}</td>
+                              <td>{{numFormat osAmount "0,0.00 $"}}</td>
                           </tr>
                         {{/each}}
                       </tbody>
