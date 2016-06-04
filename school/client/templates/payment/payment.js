@@ -91,7 +91,8 @@ indexTpl.events({
     },
     'click .show': function (e, t) {
         var data = School.Collection.Payment.findOne(this._id);
-
+        data.fromDate = moment(data.fromDate).format('YYYY-MM-DD');
+        data.toDate = moment(data.toDate).format('YYYY-MM-DD');
         alertify.alert(fa("eye", "Payment"), renderTemplate(showTpl, data).html);
     },
     'click .printInvoice': function () {
